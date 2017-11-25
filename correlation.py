@@ -10,7 +10,7 @@ import matplotlib.pylab as pylab
 
 import seaborn as sns
 
-%matplotlib inline
+#%matplotlib inline
 mpl.style.use( 'ggplot' )
 sns.set_style( 'white' )
 pylab.rcParams[ 'figure.figsize' ] = 8, 6
@@ -30,7 +30,7 @@ def plot_correlation_map( df ):
     )
 
 fname_weather = "NYC_Transportation_Weather_Study/Datasets/Wunderground/Monthly_Weather_Raw_JFK_Updated-Seaborn.csv"
-fname_stats = "NYC_Transportation_Weather_Study/Datasets/statistics.csv"
+fname_stats = "NYC_Transportation_Weather_Study/Datasets/new_stats.csv"
 
 weather = pd.read_csv(fname_weather)
 stats = pd.read_csv(fname_stats)
