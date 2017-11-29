@@ -11,6 +11,7 @@
 
 using namespace std;
 
+// Enter data to the vector of list
 bool getRow(string line, vector<string>& rowData){
   string datum = "";
   int count_comma = 0;
@@ -32,6 +33,7 @@ bool getRow(string line, vector<string>& rowData){
   return true;
 }
 
+// Deprecated, approximate distance if meters not provided
 float getSquaredist(float lat_1, float lat_2, float lon_1, float lon_2){
   float pi = atan(1)*4;
   float R = 6371;
@@ -40,9 +42,9 @@ float getSquaredist(float lat_1, float lat_2, float lon_1, float lon_2){
   return dist_lat + dist_long;
 }
 
+// Use a timestamp to represent the date
 float timeStamp(string datetime){
   int datestamp = 0;
-  // int timestamp = 0;
   int mark = 0;
   int stamp = 0;
   string temp = "";
@@ -50,31 +52,21 @@ float timeStamp(string datetime){
     if(datetime[i] == '-' || datetime[i] == ' '){
       stamp = atoi(temp.c_str());
       mark++;
-      if(mark == 1){
-        // timestamp += 385*stamp;
+      if(mark == 1)
         datestamp += 420*stamp;
-      }
-      if(mark == 2){
+      if(mark == 2)
         datestamp += 32*stamp;
-        // timestamp += 32*stamp;
-      }
-      if(mark == 3){
-        // timestamp += stamp;
+      if(mark == 3)
         datestamp += stamp;
-      }
       temp = "";
       continue;
     }
     temp.push_back(datetime[i]);
   }
-  // stamp = atoi(temp.c_str());
-  // timestamp += stamp;
-  // list<float> dtStamp;
-  // dtStamp.push_back((float)datestamp);
-  // dtStamp.push_back((float)timestamp);
   return datestamp;
 }
 
+// Calculate duration from pickup and dropoff time
 float durCal(string pickup, string dropoff, bool& non_sense){
   int pickupTime = 0;
   int dropoffTime = 0;
@@ -115,6 +107,7 @@ float durCal(string pickup, string dropoff, bool& non_sense){
   return duration;
 }
 
+// Convert datestamp to date string
 string date2str(int datestamp){
   ostringstream temp1;
   int mod = datestamp % 420;
@@ -132,21 +125,9 @@ string date2str(int datestamp){
   return str_year + "-" + str_month + "-" + str_day;
 }
 
-// void timeCollision(const map<float, vector<string> >& oneDay, float& t){
-//   map<float, vector<string> >::const_iterator it = oneDay.find(t);
-//   if(it != oneDay.end()){
-//     t += 0.1;
-//     timeCollision(oneDay, t);
-//   }
-// }
-//
-// void timeStampcolli(const map<float, map<float, vector<string> > >& dataAll, float d, float& t){
-//   map<float, map<float, vector<string> > >::const_iterator it = dataAll.find(d);
-//   if(it != dataAll.end())
-//     timeCollision(it->second, t);
-// }
-
+// Start main
 int main(int argc, char* argv[]){
+  // Check inputs
   if(argc != 3){
     cout << "Wrong Input" << endl;
     return 1;
@@ -160,41 +141,33 @@ int main(int argc, char* argv[]){
     return 1;
   }
 
+  // Condense start
   vector<string> rowData;
   map<float, vector<vector<string> > > dataAll;
-  // inFile.open("train_part.txt");
   string line;
   getline(inFile, line);
+  // Loop over the file to get data
   while(!inFile.eof()){
     vector<string> rowData;
     getline(inFile, line);
     if(!getRow(line, rowData)) continue;
     float dateStamp = timeStamp(rowData[0]);
-    // float d = dtstamps.front();
-    // dtstamps.pop_front();
-    // float t = dtstamps.front();
-    // dtstamps.pop_front();
-    // dateStamps.push_back(d);
-    // timeStampcolli(dataAll, d, t);
-    // timeStamps.push_back(t);
-    // dataAll[d][t] = rowData;
+    // Put data into a map
     dataAll[dateStamp].push_back(rowData);
   } // Cycle through rows
 
   vector<vector<float> > statistics;
   vector<string> dateVec;
   map<float, vector<vector<string> > >::iterator it1;
-  // map<float, vector<string> >::iterator it2;
 
+  // Calculate stats
     for(it1=dataAll.begin(); it1 != dataAll.end(); it1++){
      vector<float> temp;
      int count = 0;
      float totalPassen = 0;
      float time_dist = 0;
-     // float time_dist_km = 0;
      float sumDur = 0;
      float sumDist = 0;
-     // float sumDist_km = 0;
 
      for(unsigned int i=0; i<it1->second.size(); i++){
        bool non_sense = false;
@@ -211,50 +184,27 @@ int main(int argc, char* argv[]){
        time_dist += dist/duration*(float)3600;
      }
 
-     // for(it2=it1->second.begin(); it2 != it1->second.end(); it2++){
-     //   count++;
-     //   float passen = strtof(it2->second[3].c_str(), 0);
-     //   totalPassen += passen;
-     //   float start_long = strtof(it2->second[6].c_str(),0);
-     //   float end_long = strtof(it2->second[4].c_str(),0);
-     //   float start_lat = strtof(it2->second[7].c_str(),0);
-     //   float end_lat = strtof(it2->second[5].c_str(),0);
-     //   float dist = abs(start_long - end_long)+abs(start_lat - end_lat);
-     //   float dist_km = getSquaredist(start_long, end_long, start_lat, end_lat);
-     //   float tripDur = strtof(it2->second[8].c_str(),0);
-     //   time_dist += dist/tripDur;
-     //   time_dist_km += dist_km/tripDur;
-     //   duration += tripDur;
-     //   sumDist += dist;
-     //   sumDist_km += dist_km;
-     // }
      float avg_Passen = totalPassen/(float)count;
      float avg_speed = time_dist/(float)count;
-     // float avg_t_dist_km = time_dist_km/(float)count;
      float avg_duration = sumDur/(float)count;
      float avg_Dist = sumDist/(float)count;
      string date_str = date2str((int)it1->first);
-
-     //cout << time_dist << " " << count << endl;
-     //cout << avg_t_dist << endl;
-
+     // Push back all the stats
      dateVec.push_back(date_str);
      temp.push_back(totalPassen);
      temp.push_back(avg_Passen);
-     // temp.push_back(avg_t_dist);
-     // temp.push_back(avg_t_dist_km);
-     // temp.push_back(avg_duration);
      temp.push_back(count);
      temp.push_back(sumDist);
      temp.push_back(avg_Dist);
      temp.push_back(avg_speed);
      temp.push_back(avg_duration);
-     // temp.push_back(sumDist_km);
      statistics.push_back(temp);
    }
 
+   // Header
    outFile << "Date Total_Passenger Avg_Passen  Total_trip Total_dist(mi) Avg_Dist(mi)  Avg_speed(mi/h) Avg_duration(s)" << endl;
 
+   // Output the stats
     for(unsigned int i=0; i<statistics.size(); i++){
       outFile << dateVec[i] << "  ";
       for(unsigned int j=0; j<statistics[i].size(); j++)
@@ -262,6 +212,5 @@ int main(int argc, char* argv[]){
 
       outFile << endl;
     }
-
 
 }
