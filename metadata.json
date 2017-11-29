@@ -1,0 +1,26 @@
+{
+	"Files":
+	{
+		"statistics.csv":
+		{
+			"Description": "This file contains the aggregated statistics for each day in 2016 distilled from the original NYC Green Line taxi data found at http://www.nyc.gov/html/tlc/html/about/trip_record_data.shtml by using the condense.cpp script.",
+			"Fields":
+			{
+				"Date": "The date in mm/dd/yyyy format.",
+				"Total_passenger": "The count of total passengers who took taxis for the given day based on trip start.",
+				"Avg_passen": "The average number of passengers in each taxi trip for the given day based on trip start.",
+				"Total_trip": "Total number of taxi trips which took place on that day.",
+				"Total_dist(mi)": "Total distance traveled by all taxis for the given day in miles.",
+				"Avg_dist(mi)": "The average distance traveled on taxi trips for the given day in miles.",
+				"Avg_speed(mi/hr)": "The average speed over all taxi trips for that day in miles per hour, calculated based on the average of total distance divided by trip time for each trip.",
+				"Avg_duration(s)": "The average duration of each taxi trip for the day in seconds."
+			}
+		},
+
+		"Monthly_Weather_Raw_JFK_Updated.csv":
+		{
+			"Description": "This file contains the 2016 weather information for JFK as found at https://www.wunderground.com/history/airport/KJFK/2016/1/2/MonthlyHistory.html?&reqdb.zip=&reqdb.magic=&reqdb.wmo= after some reformatting to account for the odd header structure on the site.",
+			"Fields": "The fields are the original measurements used by Weather Underground."
+		}
+	}
+}
