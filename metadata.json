@@ -1,9 +1,9 @@
 {
-	"Files":
+	"Datasets":
 	{
-		"statistics.csv":
+		"new_stats_green_tlc.csv":
 		{
-			"Description": "This file contains the aggregated statistics for each day in 2016 distilled from the original NYC Green Line taxi data found at http://www.nyc.gov/html/tlc/html/about/trip_record_data.shtml by using the condense.cpp script.",
+			"Description": "This file contains the aggregated statistics for each day in 2016 distilled from the original NYC Green Line taxi data. Data was combined using the tlc_csv_combination_script file and the statistics were generated from the condense.cpp script.",
 			"Fields":
 			{
 				"Date": "The date in mm/dd/yyyy format.",
@@ -14,13 +14,50 @@
 				"Avg_dist(mi)": "The average distance traveled on taxi trips for the given day in miles.",
 				"Avg_speed(mi/hr)": "The average speed over all taxi trips for that day in miles per hour, calculated based on the average of total distance divided by trip time for each trip.",
 				"Avg_duration(s)": "The average duration of each taxi trip for the day in seconds."
-			}
+			},
+			"Source": "http://www.nyc.gov/html/tlc/html/about/trip_record_data.shtml"
+		},
+
+		"stats_yellow_kaggle.csv": 
+		{
+			"Description": "This file contains the aggregated statistics for each day in 2016 distilled from the Kaggle NYC 2016 Taxi Trip Data. Data was downloaded from the site, split up and uploaded to the github repository (due to github file size limits.",
+			"Fields": 
+			{
+				"id" : "a unique identifier for each trip",
+				"vendor_id" : "a code indicating the provider associated with the trip record",
+				"pickup_datetime" : "date and time when the meter was engaged",
+				"dropoff_datetime" : "date and time when the meter was disengaged",
+				"passenger_count" : "the number of passengers in the vehicle (driver entered value)",
+				"pickup_longitude" : "the longitude where the meter was engaged",
+				"pickup_latitude" : "the latitude where the meter was engaged",
+				"dropoff_longitude" : "the longitude where the meter was disengaged",
+				"dropoff_latitude" : "the latitude where the meter was disengaged",
+				"store_and_fwd_flag" : "This flag indicates whether the trip record was held in vehicle memory before sending to the vendor because the vehicle did not have a connection to the server - Y=store and forward; N=not a store and forward trip",
+				"trip_duration" : "duration of the trip in seconds"
+			},
+			"Source": "https://www.kaggle.com/c/nyc-taxi-trip-duration/data"
 		},
 
 		"Monthly_Weather_Raw_JFK_Updated.csv":
 		{
-			"Description": "This file contains the 2016 weather information for JFK as found at https://www.wunderground.com/history/airport/KJFK/2016/1/2/MonthlyHistory.html?&reqdb.zip=&reqdb.magic=&reqdb.wmo= after some reformatting to account for the odd header structure on the site.",
-			"Fields": "The fields are the original measurements used by Weather Underground."
+			"Description": "This file contains the 2016 weather information for JFK, gathered from historical data from wunderground. Data has been refomatted to remove monthly headers, rename the source headers to provide better context for the values and inclusion of a day column and a month column.",
+			"Fields": "The fields are the original measurements used by Weather Underground.",
+			"Source": "https://www.wunderground.com/history/airport/KJFK/2016/1/1/CustomHistory.html?dayend=31&monthend=12&yearend=2016&req_city=&req_state=&req_statename=&reqdb.zip=&reqdb.magic=&reqdb.wmo="
 		}
+	},
+	"Scripts":
+	{
+		"condense.cpp":
+		{
+			"Description": "This file reads in raw data from tlc green line data, computes statistics, and saves it to a separate file. Additionally, it removes junk values from the original data (ex: trip distance of 0).",
+			"Input": "green_tlc_data.csv",
+			"Output": "new_stats_green_tlc.csv"
+		}
+	},
+	"Visuals":
+	{
+		"Description": "Visualizations created via a python script and an ipython notebook. The visualizations consist of both bar charts, scatter plots (with lines of best fit), and a correlation heatmap. It represensents comparisons between the JFK weather data and the green line tlc taxi data.",
+		"Data Sources": ["new_stats_green_tlc.csv", "Monthly_Weather_Raw_JFK_Updated.csv"],
+		"Generation Sources": ["Matplotlib_Visualization_Python.py", "NYC Weather Taxi Analysis.ipynb", "correlation.py"]
 	}
 }
