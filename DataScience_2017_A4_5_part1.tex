@@ -56,7 +56,7 @@
 
         \item %PART 1-b
         The Kaggle Yellow line taxi data came in a zipped csv file, with each row representing one trip and each column representing various statistics about each trip. The metadata here was simply a plain text pairing system of column title and an explanation of what it meant in plain English with units. The Green line data is from the NYC Taxi and Limousine Commission, Trip Record Data page. Each trip sheet data is stored by Year, Month, and the taxi line (Yellow, Green or FHV) in the form of a csv file. Data dictionary pdfs provide a description for each dataset's Field Name.
-		The weather data was available on a web page (Weather Underground historical KJFK page), from which a script was used to scrape the JavaScript into a csv file, which was labeled with appropriate column names as metadata. The only additional piece of metadata collected on the weather data was the location of its collection: JFK International Airport. 
+		The weather data was available on a web page (Weather Underground historical KJFK page), from which a script was used to scrape the JavaScript into a csv file, which was labeled with appropriate column names as metadata. The only additional piece of metadata collected on the weather data was the location of its collection: JFK International Airport.
 		The team also decided to aggregate the unwieldy individual taxi trip data into a statistics csv file, which consisted of a datapoint for each day, giving the total number of taxi passengers that day, the average number of passengers per ride, the number of rides, the average disance and speed of rides, and average trip duration. The team thought that these aggregated statistics could be used to see meaningful correlations during analysis. Metadata for these statistics can be found in the metadata.json file found on the GitHub page.
 
 
@@ -90,6 +90,12 @@
         \item %PART 2-c
 
         The steps taken to perform the analysis were locating the data relevant to our study, parsing through all the data, splitting up the data, separating the data from the metadata (which is included in a JSON file) and then conducting analysis on the data by using scripts to produce graphs displaying relationships pertinent to the questions posed. After the data was obtained, it had to be reformatted into a fashion that facilitated analysis to answer the questions posed by the team. The team wrote scripts to validate the analysis by reasoning about real-world phenomena in accordance with the results of the study.
+        
+        \begin{center}
+            \includegraphics[width=7cm, height=5.25cm]{correlation_heatmap}
+        \end{center}
+        
+        The above heatmap was used to determine which areas would likely provide the most fruitful analysis. Of these numerical features, temperature and precipitation showed the most correlation with the various taxi data statistics, and so these were chosen for visualization along with the categorical event weather data.
 
     \end{enumerate}
 
@@ -102,20 +108,20 @@
 
         \includegraphics[width=7cm,height=5.25cm]{Scatter_Plots/Average_Temperature/Average_Temperature_vs_Total_Taxi_Passengers}
         \includegraphics[width=7cm,height=5.25cm]{Scatter_Plots/Average_Temperature/Average_Temperature_vs_Average_Taxi_Trip_Duration}
-        
+
         These two images paint a very picture in relation to our questions, showing that more people tend to take taxis when the temperature is lower, but that temperature has a minimal effect on trip duration (only a few minutes difference on average).
-        
+
         \begin{center}
             \includegraphics[width=7cm,height=5.25cm]{Scatter_Plots/Precipitation_Sum/Precipitation_Sum_vs_Total_Taxi_Passengers}
         \end{center}
-        
+
         This correlation suggests that far less people take taxis when there is a significant amount of precipitation, likely because people prefer not to travel around the city at all in inclement weather, if avoidable.
-        
+
         \includegraphics[width=7cm,height=5.25cm]{Event_Bar_Charts/Event_Bar_Chart_Average_Total_Taxi_Passengers}
         \includegraphics[width=7cm,height=5.25cm]{Event_Bar_Charts/Event_Bar_Chart_Average_Taxi_Speed}
-        
+
         In terms of weather events, the above visuals show that the most passengers tend to use taxi services on rainy days and that foggy days cause the most decrease in speed, both of which intuitively make sense. That being said, neither makes a particularly striking difference.
-        
+
         Overall, after analyzing the trends in the data the conclusion is that inclement weather, particularly cold and rain, cause more people to take taxis in New York City, although the impact is less than expected. Even further from what the team predicted, inclement weather has a very minimal effect on the speed of taxi trips. Upon further consideration, the team realizes that, although there is more room for effect than in the Manhattan-based yellow line data, average speeds are still low for this data, which means that weather likely would not have as much impact as on roads with higher speeds such as highways.
 
         \item %PART 3-b
@@ -183,8 +189,8 @@
         \textbf{Dissemination:}
 
         A project description and appropriate topics will be provided to create connections between interested parties and our datasets. GitHub allows for all changes and additions to be publicized to all outside parties and enables them to track via GitHub issues. GitHub enables the team to disseminate and connect external users to our data project management.
-        
-    
+
+
     \end{enumerate}
 
 
